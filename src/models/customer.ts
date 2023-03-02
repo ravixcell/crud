@@ -1,10 +1,9 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../config/db';
 import { Orders } from './order';
-import { Phones } from './phone';
 
-export const User = sequelize.define(
-	'user',
+export const Customer = sequelize.define(
+	'customer',
 	{
 		firstName: {
 			type: Sequelize.STRING,
@@ -14,43 +13,31 @@ export const User = sequelize.define(
 			type: Sequelize.STRING,
 			allowNull: false
 		},
-		email: {
+		mobile: {
 			type: Sequelize.STRING,
 			allowNull: false,
-			unique: true,
-			validate: {
-				isEmail: true
-			}
+			unique: false
 		},
 		userName: {
 			type: Sequelize.STRING,
 			allowNull: false,
 			unique: true
 		},
-		password: {
-			type: Sequelize.STRING,
-			allowNull: false,
-			validate: {
-				len: [6, 256]
-			}
-		},
-		role: {
-			type: Sequelize.ENUM('admin', 'owner', 'sales'),
-			defaultValue: 'sales',
-			allowNull: false
-		},
 		isActive: {
 			type: Sequelize.BOOLEAN,
 			allowNull: true,
 			defaultValue: true
+		},
+		lastPurchase: {
+			type: Sequelize.DATE,
+			allowNull: true
 		}
 	},
 	{
 		paranoid: true,
 		deletedAt: 'deletedAt',
 		timestamps: true,
-		tableName: 'users'
+		tableName: 'customer'
 	}
 );
-// User.hasMany(Orders);
-// User.hasMany(Phones);
+// Customer.hasMany(Orders);

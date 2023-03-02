@@ -1,6 +1,8 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('sequelize');
-// Set up the database connection
+import { Orders } from './../models/order';
+import { Customer } from './../models/customer';
+
 export const sequelize = new Sequelize({
 	dialect: 'mysql',
 	host: 'localhost',
@@ -9,6 +11,7 @@ export const sequelize = new Sequelize({
 	password: 'Admin@123',
 	database: 'my_database'
 });
+console.log(sequelize, 'gggg');
 import { Brand } from '../models/brands';
 import { Phones } from '../models/phone';
 import { User } from '../models/users';
@@ -20,6 +23,8 @@ db.sequelize = sequelize;
 db.User = User;
 db.Phones = Phones;
 db.Brands = Brand;
+db.Customer = Customer;
+db.Orders = Orders;
 // Test the database connection
 sequelize
 	.authenticate()
@@ -32,7 +37,7 @@ sequelize
 
 // Define the models for the database
 // Sync the models with the database
-sequelize.sync();
+// sequelize.sync();
 
 // Export the database connection and models
 module.exports = {
@@ -40,5 +45,7 @@ module.exports = {
 	User,
 	db,
 	Phones,
-	Brands
+	Brand,
+	Customer,
+	Orders
 };

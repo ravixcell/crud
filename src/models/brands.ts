@@ -1,7 +1,7 @@
 import Sequelize from 'sequelize';
+import { Phones } from './phone';
 import { sequelize } from '../config/db';
-
-export const Brand = sequelize.define(
+export const Brand = sequelize?.define(
 	'brand',
 	{
 		name: {
@@ -24,3 +24,4 @@ export const Brand = sequelize.define(
 		tableName: 'brand'
 	}
 );
+// Brand.hasMany(Phones);

@@ -1,5 +1,8 @@
+import { Orders } from './order';
+import { User } from './users';
 import Sequelize from 'sequelize';
 import { sequelize } from '../config/db';
+import { Brand } from './brands';
 
 export const Phones = sequelize.define(
 	'phones',
@@ -14,6 +17,14 @@ export const Phones = sequelize.define(
 			allowNull: false
 		},
 		model: {
+			type: Sequelize.STRING,
+			allowNull: false
+		},
+		ram: {
+			type: Sequelize.STRING,
+			allowNull: false
+		},
+		storage: {
 			type: Sequelize.STRING,
 			allowNull: false
 		},
@@ -66,6 +77,10 @@ export const Phones = sequelize.define(
 			allowNull: false,
 			defaultValue: 0
 		},
+		soldTo: {
+			type: Sequelize.INTEGER,
+			allowNull: false
+		},
 		soldDate: {
 			type: Sequelize.DATEONLY,
 			allowNull: true
@@ -78,3 +93,6 @@ export const Phones = sequelize.define(
 		tableName: 'phones'
 	}
 );
+// Phones.belongsTo(Brand);
+// Phones.belongsTo(Orders);
+// Phones.belongsTo(User);
