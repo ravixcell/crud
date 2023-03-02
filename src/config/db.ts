@@ -9,6 +9,8 @@ export const sequelize = new Sequelize({
 	password: 'Admin@123',
 	database: 'my_database'
 });
+import { Brand } from '../models/brands';
+import { Phones } from '../models/phone';
 import { User } from '../models/users';
 
 export const db: any = {};
@@ -16,6 +18,8 @@ export const db: any = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.User = User;
+db.Phones = Phones;
+db.Brands = Brand;
 // Test the database connection
 sequelize
 	.authenticate()
@@ -34,5 +38,7 @@ sequelize.sync();
 module.exports = {
 	sequelize,
 	User,
-	db
+	db,
+	Phones,
+	Brands
 };

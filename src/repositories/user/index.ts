@@ -1,5 +1,6 @@
 import { User } from './../../models/users';
 import { db } from '../../config/db';
+import bycrypt from 'bcryptjs';
 export class UserRepository {
 	users: any[];
 	constructor() {
@@ -31,13 +32,13 @@ export class UserRepository {
 		}
 	}
 
-	async getUserById(id: string) {
+	async getUserById(id: string, res: any) {
 		const user = await db.User.findOne({
 			where: {
 				id: Number(id)
 			}
 		});
-		return user || null;
+		return user;
 	}
 
 	async createUser(newUser: any) {
@@ -46,8 +47,9 @@ export class UserRepository {
 			lastName: newUser.lastName,
 			userName: newUser.userName,
 			email: newUser.email,
-			password: newUser.password
+			password: await bycrypt.hash(newUser.password, 10)
 		};
+		console.log(userData);
 		try {
 			const user = await db.User.create(userData);
 			return user;
@@ -57,7 +59,6 @@ export class UserRepository {
 	}
 
 	async updateUser(id: string, updatedUser: any) {
-		console.log(updatedUser);
 		const user = await db.User.update(updatedUser, {
 			where: { id: Number(id) }
 		});
@@ -66,7 +67,6 @@ export class UserRepository {
 	}
 
 	async deleteUser(id: string) {
-		console.log(id);
 		const user = await db.User.destroy({
 			where: {
 				id: Number(id)

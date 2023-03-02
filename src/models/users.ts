@@ -29,15 +29,24 @@ export const User = sequelize.define(
 			type: Sequelize.STRING,
 			allowNull: false,
 			validate: {
-				len: [6, 30]
+				len: [6, 256]
 			}
+		},
+		role: {
+			type: Sequelize.ENUM('admin', 'owner', 'sales'),
+			defaultValue: 'sales',
+			allowNull: false
+		},
+		isActive: {
+			type: Sequelize.BOOLEAN,
+			allowNull: true,
+			defaultValue: true
 		}
 	},
 	{
 		paranoid: true,
 		deletedAt: 'deletedAt',
 		timestamps: true,
-
 		tableName: 'users'
 	}
 );
