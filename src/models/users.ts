@@ -2,8 +2,9 @@ import Sequelize from 'sequelize';
 import { sequelize } from '../config/db';
 import { Orders } from './order';
 import { Phones } from './phone';
+import { ROLES } from '../config/constant';
 
-export const User = sequelize.define(
+export const User = sequelize?.define(
 	'user',
 	{
 		firstName: {
@@ -35,7 +36,7 @@ export const User = sequelize.define(
 			}
 		},
 		role: {
-			type: Sequelize.ENUM('admin', 'owner', 'sales'),
+			type: Sequelize.ENUM(...ROLES),
 			defaultValue: 'sales',
 			allowNull: false
 		},

@@ -1,10 +1,10 @@
-import { Orders } from './order';
-import { User } from './users';
 import Sequelize from 'sequelize';
 import { sequelize } from '../config/db';
 import { Brand } from './brands';
+import { Orders } from './order';
+import { User } from './users';
 
-export const Phones = sequelize.define(
+export const Phones = sequelize?.define(
 	'phones',
 	{
 		id: {

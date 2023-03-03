@@ -4,7 +4,7 @@ import { User } from './users';
 import { Phones } from './phone';
 import { Customer } from './customer';
 
-export const Orders = sequelize.define(
+export const Orders = sequelize?.define(
 	'orders',
 	{
 		deviceId: {

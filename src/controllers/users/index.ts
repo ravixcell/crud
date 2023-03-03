@@ -7,12 +7,11 @@ const userRepository = new UserRepository();
 const auth = require('../../middleware/auth');
 router.get('/', auth, async (req, res) => {
 	const users = await userRepository.getAllUsers(req, res);
-	res.json(users);
+	res.status(200).json(users);
 });
 
 router.get('/:id', auth, async (req, res) => {
 	const id = req.params.id;
-	console.log('here', id);
 	const response = await userRepository.getUserById(id, res);
 	return res.status(200).send({ code: 200, response });
 });
@@ -36,7 +35,6 @@ router.delete('/:id', auth, async (req, res) => {
 		const user = await userRepository.deleteUser(id);
 		res.status(204).json({ status: 200, message: 'deleted' });
 	} catch (e) {
-		console.log('error', e);
 		res.status(400).json({ message: 'something went wrong' });
 	}
 });

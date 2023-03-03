@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
-import { Phones } from './phone';
 import { sequelize } from '../config/db';
+import { Phones } from './phone';
 export const Brand = sequelize?.define(
 	'brand',
 	{

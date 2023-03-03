@@ -1,8 +1,8 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../config/db';
-import { Orders } from './order';
+import {Orders} from "./order";
 
-export const Customer = sequelize.define(
+export const Customer = sequelize?.define(
 	'customer',
 	{
 		firstName: {

@@ -1,31 +1,55 @@
-import { User } from './../../models/users';
+import { Op } from 'sequelize';
 import { db } from '../../config/db';
 import bycrypt from 'bcryptjs';
+import { searchQuery } from '../../Services/common';
 export class UserRepository {
-	users: any[];
 	constructor() {
 		// Initialize your database connection here
 		// For this example, we'll use a simple array to store user data
-		this.users = [];
 	}
 
 	async getAllUsers(req: any, res: any) {
 		const limit = Number(req.query.limit) || 20;
 		let offset = 0;
+		const key = req.query.search || '';
+		// ...searchQuery(key, [
+		// 				'firstName',
+		// 				'lastName',
+		// 				'email',
+		// 				'userName',
+		// 				'role'
+		// 			])
 		try {
-			const { count } = await db.User.findAndCountAll();
 			const page = req.query.page; // page number
-			const pages = Math.ceil(count / limit);
 			offset = limit * (page - 1);
-			const usersData = await db.User.findAll({
+			const user = await db.User.findAndCountAll({
+				where: {
+					role: {
+						[Op.not]: 'god'
+					},
+					...searchQuery(key, [
+						'firstName',
+						'lastName',
+						'email',
+						'userName',
+						'role'
+					])
+				},
 				offset: offset,
-				limit: limit
+				limit: limit,
+				attributes: [
+					'id',
+					'firstName',
+					'lastName',
+					'email',
+					'userName',
+					'role',
+					'isActive'
+				]
 			});
-			// console.log(usersData);
+			const pages = Math.ceil(user.count / limit);
 			return {
-				total: count,
-				pages: pages,
-				data: usersData
+				data: { user, pages }
 			};
 		} catch (e) {
 			return e;
@@ -49,7 +73,6 @@ export class UserRepository {
 			email: newUser.email,
 			password: await bycrypt.hash(newUser.password, 10)
 		};
-		console.log(userData);
 		try {
 			const user = await db.User.create(userData);
 			return user;
@@ -62,7 +85,6 @@ export class UserRepository {
 		const user = await db.User.update(updatedUser, {
 			where: { id: Number(id) }
 		});
-		console.log('user', user);
 		return user;
 	}
 

@@ -3,7 +3,6 @@ import express from 'express';
 const router = express.Router();
 const AuthRepo = new AuthRepository();
 router.post('/login', async (req, res) => {
-	console.log('dd', req.body);
 
 	try {
 		// Get user input
