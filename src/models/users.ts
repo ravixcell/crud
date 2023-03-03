@@ -50,8 +50,19 @@ export const User = sequelize?.define(
 		paranoid: true,
 		deletedAt: 'deletedAt',
 		timestamps: true,
-		tableName: 'users'
+		tableName: 'users',
+		scopes: {
+			admin: {
+				attributes: {
+					exclude: ['password']
+				}
+			} // No special options for admin scope. No exclusion.
+		}
 	}
 );
 // User.hasMany(Orders);
 // User.hasMany(Phones);
+
+User.associate = function () {
+	User.hasMany(Phones, { as: 'phones', foreignKey: 'purchaseBy' });
+};

@@ -6,11 +6,11 @@ const app = express();
 import bodyParser from 'body-parser';
 import * as router from './controllers/users/index';
 import * as auth from './controllers/auth/index';
-import * as phone from './controllers/auth/index';
+import * as phone from './controllers/phone/index';
 app.use(bodyParser.json());
 app.use('/api/users', router.default);
 app.use('/api/auth', auth.default);
-app.use('/api/phone', phone.default);
+app.use('/api/phones', phone.default);
 import { seed } from './seedr/user';
 // Start the server
 const port = process.env.PORT || 5001;

@@ -1,6 +1,6 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../config/db';
-import {Orders} from "./order";
+import { Orders } from './order';
 
 export const Customer = sequelize?.define(
 	'customer',
@@ -22,6 +22,10 @@ export const Customer = sequelize?.define(
 			type: Sequelize.STRING,
 			allowNull: false,
 			unique: true
+		},
+		createdBy: {
+			type: Sequelize.INTEGER,
+			allowNull: false
 		},
 		isActive: {
 			type: Sequelize.BOOLEAN,

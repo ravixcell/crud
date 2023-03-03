@@ -3,6 +3,7 @@ import { sequelize } from '../config/db';
 import { Brand } from './brands';
 import { Orders } from './order';
 import { User } from './users';
+import { Customer } from './customer';
 
 export const Phones = sequelize?.define(
 	'phones',
@@ -15,6 +16,10 @@ export const Phones = sequelize?.define(
 		brand: {
 			type: Sequelize.STRING,
 			allowNull: false
+			// references: {
+			// 	model: 'brand',
+			// 	key: 'id'
+			// }
 		},
 		model: {
 			type: Sequelize.STRING,
@@ -65,13 +70,24 @@ export const Phones = sequelize?.define(
 		purchaseBy: {
 			type: Sequelize.INTEGER,
 			allowNull: false
+			// references: {
+			// 	model: 'users',
+			// 	key: 'id'
+			// }
 		},
 		isSold: {
 			type: Sequelize.BOOLEAN,
 			allowNull: true,
 			defaultValue: false
 		},
-		soldBy: { type: Sequelize.INTEGER, allowNull: false },
+		soldBy: {
+			type: Sequelize.INTEGER,
+			allowNull: true
+			// references: {
+			// 	model: 'customer',
+			// 	key: 'id'
+			// }
+		},
 		soldPrice: {
 			type: Sequelize.INTEGER,
 			allowNull: false,
@@ -79,7 +95,11 @@ export const Phones = sequelize?.define(
 		},
 		soldTo: {
 			type: Sequelize.INTEGER,
-			allowNull: false
+			allowNull: true
+			// references: {
+			// 	model: 'customer',
+			// 	key: 'id'
+			// }
 		},
 		soldDate: {
 			type: Sequelize.DATEONLY,
@@ -93,6 +113,9 @@ export const Phones = sequelize?.define(
 		tableName: 'phones'
 	}
 );
-// Phones.belongsTo(Brand);
-// Phones.belongsTo(Orders);
-// Phones.belongsTo(User);
+Phones.belongsTo(User, { foreignKey: 'purchaseBy' });
+// Phones.associate = function () {
+// Phones.belongsTo(User, { foreignKey: 'soldBy', as: 'id' });
+// Phones.belongsTo(Brand, { foreignKey: 'brand', as: 'id' });
+// Phones.belongsTo(Customer, { foreignKey: 'soldTo', as: 'id' });
+// };
