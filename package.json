@@ -6,7 +6,7 @@
     "clean": "rimraf ./build",
     "build": "npm-run-all format lint test clean && tsc",
     "start": "node src",
-    "seed": "tsc src/seedr/user.ts",
+    "seed": "npx ts-node src/seedr/user",
     "local": "ts-node src",
     "local:watch": "nodemon src -e ts,json --exec 'npm run local'",
     "lint": "eslint src",

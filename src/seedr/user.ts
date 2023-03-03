@@ -46,6 +46,8 @@ export const seed = async () => {
 	await seedUsers();
 	await seedBrands();
 	await seedPhones();
+	await seedCustomer();
+	await seedOrder();
 };
 const seedBrands = async () => {
 	try {
@@ -134,6 +136,67 @@ const seedUsers = async () => {
 		console.log(err);
 	}
 };
-seedUsers();
-seedBrands();
-seedPhones();
+const seedCustomer = async () => {
+	try {
+		const customer = [];
+		for (let i = 0; i < 20; i++) {
+			const newUser = {
+				firstName: faker.name.firstName(),
+				lastName: faker.name.lastName(),
+				userName: faker.internet.userName(),
+				mobile: faker.phone.phoneNumber('91########'),
+				createdBy: faker.datatype.number({
+					min: 2,
+					max: 20
+				}),
+				isActive: faker.helpers.arrayElement([true, false]),
+				lastPurchase: faker.date.between(
+					'2021-01-01T00:00:00.000Z',
+					'2023-02-01T00:00:00.000Z'
+				)
+			};
+			// For each fake user you create, you're going to push them into the user array you declare above
+			customer.push(newUser);
+		}
+		await db.Customer.bulkCreate(customer);
+	} catch (err) {
+		console.log(err);
+	}
+};
+const seedOrder = async () => {
+	try {
+		const customer = [];
+		for (let i = 0; i < 20; i++) {
+			const newUser = {
+				deviceId: i * 2,
+				customerId: faker.datatype.number({
+					min: 2,
+					max: 20
+				}),
+				userId: faker.datatype.number({
+					min: 2,
+					max: 20
+				}),
+				paymentMode: faker.helpers.arrayElement([
+					'cash',
+					'credit',
+					'creditCard',
+					'debitCard',
+					'upi',
+					'loan'
+				]),
+				price: faker.random.numeric(4),
+				orderId:
+					new Date().getFullYear().toString() +
+					faker.random.numeric(6).toString()
+			};
+			// For each fake user you create, you're going to push them into the user array you declare above
+			customer.push(newUser);
+		}
+		console.log(customer);
+		await db.Orders.bulkCreate(customer);
+	} catch (err) {
+		console.log(err);
+	}
+};
+seed();

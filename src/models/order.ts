@@ -20,7 +20,7 @@ export const Orders = sequelize?.define(
 			allowNull: false
 		},
 		paymentMode: {
-			type: Sequelize.INTEGER,
+			type: Sequelize.STRING,
 			allowNull: false
 		},
 		price: {
@@ -28,7 +28,7 @@ export const Orders = sequelize?.define(
 			allowNull: false
 		},
 		orderId: {
-			type: Sequelize.INTEGER,
+			type: Sequelize.STRING,
 			allowNull: false
 		}
 	},
