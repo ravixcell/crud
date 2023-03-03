@@ -1,7 +1,48 @@
-import { db } from '../config/db';
-import { faker } from '@faker-js/faker';
-import bycrypt from 'bcryptjs';
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { faker } = require('@faker-js/faker');
+const bycrypt = require('bcryptjs');
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const Sequelize = require('sequelize');
+export const sequelize = new Sequelize({
+	dialect: 'mysql',
+	host: 'localhost',
+	port: 3306,
+	username: 'root',
+	password: 'Admin@123',
+	database: 'my_database'
+});
+const { Orders } = require('../models/order');
+const { Customer } = require('../models/customer');
+const { Brand } = require('../models/brands');
+const { Phones } = require('../models/phone');
+
+const { User } = require('../models/users');
+
+export const db: any = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+db.User = User;
+db.Phones = Phones;
+db.Brand = Brand;
+db.Customer = Customer;
+db.Orders = Orders;
+// Test the database connection
+sequelize
+	.authenticate()
+	.then(() => {
+		console.log('Database connection has been established successfully.');
+	})
+	.catch((err: unknown) => {
+		console.error('Unable to connect to the database:', err);
+	});
+
+// Define the models for the database
+// Sync the models with the database
+// sequelize.sync();
+
 export const seed = async () => {
+	console.log('ddd');
 	await seedUsers();
 	await seedBrands();
 	await seedPhones();
@@ -93,3 +134,6 @@ const seedUsers = async () => {
 		console.log(err);
 	}
 };
+seedUsers();
+seedBrands();
+seedPhones();

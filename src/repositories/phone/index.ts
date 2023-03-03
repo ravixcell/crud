@@ -91,7 +91,7 @@ export class PhoneRepository {
 		} catch (e: any) {
 			return {
 				code: 400,
-				message: 'somethindg went wrong',
+				message: 'something went wrong',
 				error: e.name
 			};
 		}
