@@ -2,14 +2,16 @@
 const { faker } = require('@faker-js/faker');
 const bycrypt = require('bcryptjs');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
+require('dotenv').config();
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const Sequelize = require('sequelize');
 export const sequelize = new Sequelize({
 	dialect: 'mysql',
-	host: 'localhost',
-	port: 3306,
-	username: 'root',
-	password: 'Admin@123',
-	database: 'my_database'
+	host: process.env.DB_HOST,
+	port: process.env.DB_PORT,
+	username: process.env.DB_USERNAME,
+	password: process.env.DB_PASSWORD,
+	database: process.env.DB_DATABASE
 });
 const { Orders } = require('../models/order');
 const { Customer } = require('../models/customer');
@@ -42,7 +44,6 @@ sequelize
 // sequelize.sync();
 
 export const seed = async () => {
-	console.log('ddd');
 	await seedUsers();
 	await seedBrands();
 	await seedPhones();

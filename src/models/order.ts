@@ -42,3 +42,8 @@ export const Orders = sequelize?.define(
 // Orders.belongsTo(User);
 // Orders.hasOne(Phones);
 // Orders.belongsTo(Customer);
+Orders.associate = function () {
+	Orders.hasOne(User, { foreignKey: 'userId' });
+	Orders.hasOne(Phones, { foreignKey: 'deviceId' });
+	Orders.hasOne(Customer, { foreignKey: 'customerId' });
+};

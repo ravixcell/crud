@@ -56,7 +56,7 @@ export const User = sequelize?.define(
 				attributes: {
 					exclude: ['password']
 				}
-			} // No special options for admin scope. No exclusion.
+			}
 		}
 	}
 );
@@ -65,4 +65,5 @@ export const User = sequelize?.define(
 
 User.associate = function () {
 	User.hasMany(Phones, { as: 'phones', foreignKey: 'purchaseBy' });
+	User.hasMany(Orders, { as: 'orders', foreignKey: 'userId' });
 };

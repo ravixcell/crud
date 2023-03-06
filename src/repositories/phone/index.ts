@@ -44,8 +44,6 @@ export class PhoneRepository {
 			include: [
 				{
 					model: db.User,
-					// association: new HasMany(db.Phones, db.User, {}),
-					// where: { id: id },
 					attributes: [
 						'id',
 						'firstName',

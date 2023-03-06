@@ -25,3 +25,6 @@ export const Brand = sequelize?.define(
 	}
 );
 // Brand.hasMany(Phones);
+Brand.associate = function () {
+	Brand.hasMany(Phones, { as: 'phones', foreignKey: 'brand' });
+};
