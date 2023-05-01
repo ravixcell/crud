@@ -1,8 +1,7 @@
 import Sequelize from 'sequelize';
 import { sequelize } from '../config/db';
-import { Orders } from './order';
-import { Phones } from './phone';
 import { ROLES } from '../config/constant';
+import { Phones } from './phone';
 
 export const User = sequelize?.define(
 	'user',
@@ -60,10 +59,7 @@ export const User = sequelize?.define(
 		}
 	}
 );
-// User.hasMany(Orders);
-// User.hasMany(Phones);
 
-User.associate = function () {
-	User.hasMany(Phones, { as: 'phones', foreignKey: 'purchaseBy' });
-	User.hasMany(Orders, { as: 'orders', foreignKey: 'userId' });
+User.associate = () => {
+	User.hasMany(Phones, { foreignKey: 'purchaseBy' });
 };

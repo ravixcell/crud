@@ -1,3 +1,4 @@
+import { Phones } from './../../models/phone';
 import { Op } from 'sequelize';
 import { db } from '../../config/db';
 import bycrypt from 'bcryptjs';
@@ -12,13 +13,7 @@ export class UserRepository {
 		const limit = Number(req.query.limit) || 20;
 		let offset = 0;
 		const key = req.query.search || '';
-		// ...searchQuery(key, [
-		// 				'firstName',
-		// 				'lastName',
-		// 				'email',
-		// 				'userName',
-		// 				'role'
-		// 			])
+		console.log(key, 'search');
 		try {
 			const page = req.query.page; // page number
 			offset = limit * (page - 1);
@@ -27,6 +22,11 @@ export class UserRepository {
 					role: {
 						[Op.not]: 'god'
 					},
+					include: [
+						{
+							model: Phones
+						}
+					],
 					...searchQuery(key, [
 						'firstName',
 						'lastName',
@@ -48,6 +48,7 @@ export class UserRepository {
 				]
 			});
 			const pages = Math.ceil(user.count / limit);
+			console.log(user);
 			return {
 				data: { user, pages }
 			};
